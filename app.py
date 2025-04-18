@@ -12,7 +12,12 @@ def get_token():
     with open(PRIVATE_KEY_PATH, 'r') as f:
         private_key = f.read()
 
-    headers = { "alg": "ES256", "kid": KEY_ID, "typ": "JWT" }
+    headers = {
+        "alg": "ES256",
+        "kid": KEY_ID,
+        "typ": "JWT"
+    }
+
     payload = {
         "iss": ISSUER_ID,
         "exp": int(time.time()) + 1200,
@@ -20,7 +25,7 @@ def get_token():
     }
 
     token = jwt.encode(payload, private_key, algorithm="ES256", headers=headers)
-    return jsonify(token=token)
+    return jsonify({"token": token})
 
 if __name__ == '__main__':
     app.run()
