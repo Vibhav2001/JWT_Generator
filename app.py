@@ -29,7 +29,9 @@ def get_report():
 
         token = jwt.encode(payload, private_key, algorithm="ES256", headers=headers)
 
-        report_date = time.strftime("%Y-%m-%d")  # Yesterday's date by default
+        # Always use yesterday's date dynamically
+        report_date = time.strftime("%Y-%m-%d", time.gmtime(time.time() - 86400))
+
         url = (
             "https://api.appstoreconnect.apple.com/v1/salesReports?"
             "filter[reportType]=SALES&"
